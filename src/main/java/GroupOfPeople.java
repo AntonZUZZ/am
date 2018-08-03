@@ -1,7 +1,7 @@
 import java.lang.management.OperatingSystemMXBean;
 
 public abstract class GroupOfPeople {
-
+    //параметры
     private int population;
     private int moral;
 
