@@ -1,0 +1,86 @@
+
+
+#include <stdio.h>
+#include <string.h>
+
+int
+main ()
+{
+  char *line = NULL;
+  size_t lsize = 0, ret;
+  ret = getline (&line, &lsize, stdin);
+
+  char *p, *m;
+  int w = 0;
+
+  int number = 0;
+  int sum = 0;
+  
+  int plus[2] = {-1, 3};
+  
+  
+  while (w <= lsize)
+    {
+        
+        int lastW = w;
+        
+      p = strchr (line + w, '+');
+      m = strchr (line + w, '-');
+
+      if (p || m)
+	{
+	 
+	  int tmp = plus[1];
+	  plus[1] = 1;
+	  plus[0] = tmp;
+	  
+	  //printf ("%d\n", plus[0]);
+	  
+	  int position = p - line;
+	  if ((m - line < position) && m)
+	  {
+	    position = m - line;
+	    plus[1] = 0;
+	  }
+	  
+	  w = position + 1;
+
+	  for (int i = lastW; i < w-1; i++)
+	    {
+	      number = number * 10 + (line[i] - '0');
+	      //printf ("%c %d %d \n",line[i], number, w-1);
+	      //printf ("\n");
+	    }
+	    
+	  if (plus[0] == 3)
+	  {
+	     sum = number;
+	     
+	  } 
+	  else if (plus[0] == 1)
+	  {
+	      sum += number;
+	      
+	  }
+	  else
+	  {
+	      sum -= number;
+	  }
+	 // printf ("hh: %d %d %d \n",position, sum, number);
+	  number = 0;
+
+	  
+	}
+    else
+	{
+	 //printf ("no");
+	  break;
+	}
+
+    }
+    
+    printf("%d", sum);
+
+  free (line);
+  return 0;
+}
